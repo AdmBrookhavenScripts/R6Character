@@ -1,7 +1,11 @@
 -- R6 Character
+task.spawn(function()
 loadstring(game:HttpGet("https://github.com/AdmBrookhavenScripts/R6Character/raw/refs/heads/main/R6Character.lua"))()
-task.wait(1)
+end)
+task.wait(3)
+task.spawn(function()
 game.Players.LocalPlayer.Character:ScaleTo(6)
+end)
 task.wait(1)
 local p = game.Players.LocalPlayer
 local c = p.Character or p.CharacterAdded:Wait()
@@ -19,7 +23,7 @@ local order = {
 
 local offsets = {
 	["Torso"] = CFrame.new(0, 0, 0),
-	["Head"] = CFrame.Angles(0, math.rad(180), 0)
+	["Head"] = CFrame.Angles(0, math.rad(180), 0),
 	["Right Arm"] = CFrame.Angles(math.rad(180),0,0),
 	["Left Arm"] = CFrame.Angles(math.rad(180),0,0),
 	["Right Leg"] = CFrame.Angles(math.rad(180),0,0),
