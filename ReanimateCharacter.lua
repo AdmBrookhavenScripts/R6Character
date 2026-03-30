@@ -15,7 +15,7 @@ task.spawn(function()
 	end
 end)
 
--- Warning: This system made by stevetherealone/uhhhhhh reanimate
+-- Warning: This system was made by stevetherealone/uhhhhhh reanimate
 local Players = game.Players
 local Player = Players.LocalPlayer
 local UserInputService = game:GetService("UserInputService")
