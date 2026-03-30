@@ -1,14 +1,15 @@
 -- R6 Character
 task.spawn(function()
-loadstring(game:HttpGet("https://github.com/AdmBrookhavenScripts/R6Character/raw/refs/heads/main/R6Character.lua"))()
+loadstring(game:HttpGet("https://github.com/AdmBrookhavenScripts/R6Character/raw/refs/heads/main/ReanimateCharacter.lua"))()
 end)
 task.wait(3)
 task.spawn(function()
-game.Players.LocalPlayer.Character:ScaleTo(6)
+workspace.ReanimateCharacter:PivotTo(workspace.ReanimateCharacter:GetPivot() + Vector3.new(0,100,0))
+workspace.ReanimateCharacter:ScaleTo(6)
 end)
 task.wait(1)
 local p = game.Players.LocalPlayer
-local c = p.Character or p.CharacterAdded:Wait()
+local c = workspace.ReanimateCharacter
 local rs = game:GetService("RunService")
 local folder = workspace.WorkspaceCom["001_TrafficCones"]
 
@@ -49,7 +50,7 @@ for i,v in ipairs(founded) do
 end
 
 rs.PreSimulation:Connect(function()
-	local char = p.Character
+	local char = workspace.ReanimateCharacter
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -83,7 +84,7 @@ rs.PreSimulation:Connect(function()
 end)
 
 rs.RenderStepped:Connect(function()
-	local char = p.Character
+	local char = workspace.ReanimateCharacter
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -119,4 +120,4 @@ for _,v in pairs(c:GetDescendants()) do
 	end
 end
 
-game.Players.LocalPlayer.Character.Humanoid.HipHeight=6
+workspace.ReanimateCharacter.Humanoid.HipHeight=6
