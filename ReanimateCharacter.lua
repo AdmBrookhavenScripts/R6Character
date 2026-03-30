@@ -23,6 +23,57 @@ local RunService = game:GetService("RunService")
 local GuiService = game:GetService("GuiService")
 local GameCamera = workspace.CurrentCamera
 local GameSettings = UserSettings():GetService("UserGameSettings")
+
+local AntiflingHumanoids = {}
+	local AntiflingBaseParts = {}
+	
+	RunService.PreAnimation:Connect(function()
+		for i,v in AntiflingBaseParts do
+			if v:IsDescendantOf(workspace) then
+				v.CanCollide = false
+				v.AssemblyLinearVelocity, v.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
+			else
+				table.remove(AntiflingBaseParts, i)
+			end
+		end
+		for i,v in AntiflingHumanoids do
+			if v:IsDescendantOf(workspace) then
+				v.EvaluateStateMachine = false
+			else
+				table.remove(AntiflingHumanoids, i)
+			end
+		end
+	end)
+	local OnBasePart = function(v)
+		if v:IsA("BasePart") then
+			v.CanCollide = false
+			if not table.find(AntiflingBaseParts, v) then
+				table.insert(AntiflingBaseParts, v)
+			end
+		end
+		if v:IsA("Humanoid") then
+			v.EvaluateStateMachine = false
+			if not table.find(AntiflingHumanoids, v) then
+				table.insert(AntiflingHumanoids, v)
+			end
+		end
+	end
+	local OnCharacter = function(character)
+		character.DescendantAdded:Connect(OnBasePart)
+		for _,v in character:GetDescendants() do
+			OnBasePart(v)
+		end
+	end
+	local OnPlayer = function(player)
+		if player == Player then return end
+		player.CharacterAdded:Connect(OnCharacter)
+		if player.Character then OnCharacter(player.Character) end
+	end
+	Players.PlayerAdded:Connect(OnPlayer)
+	for _,player in Players:GetPlayers() do
+		OnPlayer(player)
+	end
+
 local SCREENGUI = Instance.new("ScreenGui")
 SCREENGUI.Parent = Player:WaitForChild("PlayerGui")
 local FallenPartsDestroyHeight = workspace.FallenPartsDestroyHeight or -500
@@ -643,6 +694,7 @@ local moveDir = (right * CMove.X) + (forward * -CMove.Z)
 if moveDir.Magnitude > 0 then
     moveDir = moveDir.Unit
 end
+
 		pcall(sethiddenproperty, RCRootPart, "PhysicsRepRootPart", nil)
 		local RCHumanoidState = RCHumanoid:GetState().Name
 		local clip = not table.find(noclipStates, RCHumanoidState)
