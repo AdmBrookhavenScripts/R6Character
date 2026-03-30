@@ -617,45 +617,6 @@ Reanimate.CreateCharacter = function(InitCFrame)
 	RCRootPart.CFrame = cf
 	local SeatWeld = nil
 	local LastJumpOffSeat = 0
-	RCHumanoid.Touched:Connect(function(part, limb)
-		if Reanimate.SeatSit and part:IsA("Seat") and not RCHumanoid.Sit and os.clock() - LastJumpOffSeat > 2 then
-			RCHumanoid.Sit = true
-			if SeatWeld ~= nil then
-				SeatWeld = SeatWeld:Destroy()
-			end
-			SeatWeld = Instance.new("Weld")
-			SeatWeld.Name = "hell yeah!! :3"
-			SeatWeld.Parent = RCRootPart
-			SeatWeld.Part0 = part
-			SeatWeld.Part1 = RCRootPart
-			SeatWeld.C0 = CFrame.new(0, part.Size.Y / 2, 0)
-			SeatWeld.C1 = CFrame.new(0, -1.5 * RC:GetScale(), 0)
-			Util.LinkDestroyI2C(SeatWeld, RCHumanoid:GetPropertyChangedSignal("Jump"):Connect(function()
-				if RCHumanoid.Jump then
-					RCHumanoid.Sit = false
-					SeatWeld:Destroy()
-				end
-			end))
-		end
-		if part.Name == "Handle" and part.Parent:IsA("Tool") and not part.Parent.Parent:FindFirstChildOfClass("Humanoid") then
-			if Reanimate.ToolGrab then
-				if Player.Character then
-					local Humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
-					if Humanoid then
-						Humanoid:EquipTool(part.Parent)
-					end
-				end
-			end
-		end
-	end)
-	RCHumanoid.Seated:Connect(function(active)
-		if not active then
-			if SeatWeld ~= nil then
-				SeatWeld = SeatWeld:Destroy()
-			end
-			LastJumpOffSeat = os.clock()
-		end
-	end)
 	local LastJump = false
 	local RCP = RaycastParams.new()
 	RCP.RespectCanCollide = true
@@ -868,7 +829,7 @@ animTable[name].totalWeight = 0
 animTable[name].connections = {}
 
 -- check for config values
-local config = game.Players.LocalPlayer.Character.Animate:FindFirstChild(name)
+local config = workspace.ReanimateCharacter.Animate:FindFirstChild(name)
 if (config ~= nil) then
 -- print("Loading anims " .. name)
 table.insert(animTable[name].connections, config.ChildAdded:connect(function(child) configureAnimationSet(name, fileList) end))
