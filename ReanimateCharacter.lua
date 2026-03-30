@@ -483,6 +483,7 @@ do
 		MobileShiftlock.Position = UDim2.new(1, -190, 1, -60)
 		MobileShiftlock.Size = UDim2.new(0, 40, 0, 40)
 		MobileShiftlock.Image = states[false]
+		MobileShiftlock.Visible = false
 		local state = false
 		AddToRenderStep(function()
 			if state ~= Reanimate.Shiftlocked then
