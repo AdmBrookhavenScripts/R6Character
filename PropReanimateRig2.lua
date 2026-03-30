@@ -4,13 +4,13 @@ loadstring(game:HttpGet("https://github.com/AdmBrookhavenScripts/R6Character/raw
 end)
 task.wait(3)
 task.spawn(function()
-workspace.ReanimateCharacter:PivotTo(workspace.ReanimateCharacter:GetPivot() + Vector3.new(0,100,0))
-workspace.ReanimateCharacter:ScaleTo(4)
+workspace.CurrentCamera.CameraSubject.Parent:PivotTo(workspace.CurrentCamera.CameraSubject.Parent:GetPivot() + Vector3.new(0,100,0))
+workspace.CurrentCamera.CameraSubject.Parent:ScaleTo(4)
 end)
 task.wait(1)
 local p = game.Players.LocalPlayer
-local c = workspace.ReanimateCharacter
-local t= workspace.ReanimateCharacter.Torso
+local c = workspace.CurrentCamera.CameraSubject.Parent
+local t = workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso")
 local rs = game:GetService("RunService")
 local folder = workspace.WorkspaceCom["001_TrafficCones"]
 
@@ -19,6 +19,14 @@ local rot = CFrame.new(0,0,0,
 	 0.999099314, -0.0421187878, -0.00517526921,
 	 0.0039775772, -0.0284704193,  0.999586701
 )
+
+local function snap90(a)
+	local deg = math.deg(a)
+	return math.rad(math.floor(deg/90 + 0.5) * 90)
+end
+
+local x, y, z = rot:ToOrientation()
+rot = CFrame.Angles(snap90(x), snap90(y), snap90(z))
 
 local fix = CFrame.Angles(math.rad(-90), 0, 0)
 
@@ -59,7 +67,7 @@ for i,v in ipairs(founded) do
 end
 
 rs.PreSimulation:Connect(function()
-	local char = workspace.ReanimateCharacter
+	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -78,9 +86,6 @@ rs.PreSimulation:Connect(function()
 				end
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(0, -2.5, 0)
-				end
-				if v.Name == "Head" then
-					cf = cf * CFrame.new(0, -1, 0)
 				end
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
@@ -93,7 +98,7 @@ rs.PreSimulation:Connect(function()
 end)
 
 rs.RenderStepped:Connect(function()
-	local char = workspace.ReanimateCharacter
+	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -113,10 +118,7 @@ rs.RenderStepped:Connect(function()
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(0, -2.5, 0)
 				end
-				if v.Name == "Head" then
-					cf = cf * CFrame.new(0, -1, 0)
-				end
-
+		
 				v:PivotTo(cf)
 			end)
 		end
@@ -129,6 +131,6 @@ for _,v in pairs(c:GetDescendants()) do
 	end
 end
 
-workspace.ReanimateCharacter.Humanoid.HipHeight=1
-t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1.5,0,0) t["Right Hip"].C0=t["Right Hip"].C0*CFrame.new(-1.5,0,0)
-t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0)
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=1
+t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1,0,0) t["Right Hip"].C0=t["Right Hip"].C0*CFrame.new(-1,0,0)
+t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0) workspace.ReanimateCharacter.Torso.Neck.C0 *= CFrame.new(0,0,-1)
