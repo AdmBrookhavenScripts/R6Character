@@ -47,7 +47,7 @@ local offsets = {
     ["Left Arm"] = rot * fix * CFrame.Angles(0, math.rad(180), 0),
     ["Right Leg"] = rot * fix,
     ["Left Leg"] = rot * fix * CFrame.Angles(0, math.rad(180), 0),
-	["Face"] = CFrame.new(0, 2.5, -0.1) * CFrame.Angles(0, math.rad(180), 0)
+	["Face"] = CFrame.new(0, 2.5, -0.05) * CFrame.Angles(0, math.rad(180), 0)
 }
 
 local founded = {}
