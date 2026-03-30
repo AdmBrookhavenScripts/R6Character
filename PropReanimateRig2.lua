@@ -104,7 +104,7 @@ end
 	end
 end)
 
-rs.RenderStepped:Connect(function()
+rs.Heartbeat:Connect(function()
 	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 

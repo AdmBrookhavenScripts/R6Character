@@ -29,7 +29,7 @@ local offsets = {
 	["Right Arm"] = CFrame.Angles(math.rad(180),0,0),
 	["Left Arm"] = CFrame.Angles(math.rad(180),0,0),
 	["Right Leg"] = CFrame.Angles(math.rad(180),0,0),
-	["Left Leg"] = CFrame.Angles(math.rad(180),0,0)
+	["Left Leg"] = CFrame.Angles(math.rad(180),0,0),
 	["Face"] = CFrame.new(0, 2.5, -0.1) * CFrame.Angles(0, math.rad(180), 0)
 }
 
@@ -87,7 +87,7 @@ end
 	end
 end)
 
-rs.RenderStepped:Connect(function()
+rs.Heartbeat:Connect(function()
 	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 
