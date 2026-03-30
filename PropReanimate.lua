@@ -4,12 +4,12 @@ loadstring(game:HttpGet("https://github.com/AdmBrookhavenScripts/R6Character/raw
 end)
 task.wait(3)
 task.spawn(function()
-workspace.ReanimateCharacter:PivotTo(workspace.ReanimateCharacter:GetPivot() + Vector3.new(0,100,0))
-workspace.ReanimateCharacter:ScaleTo(6)
+workspace.CurrentCamera.CameraSubject.Parent:PivotTo(workspace.CurrentCamera.CameraSubject.Parent:GetPivot() + Vector3.new(0,100,0))
+workspace.CurrentCamera.CameraSubject.Parent:ScaleTo(6)
 end)
 task.wait(1)
 local p = game.Players.LocalPlayer
-local c = workspace.ReanimateCharacter
+local c = workspace.CurrentCamera.CameraSubject.Parent
 local rs = game:GetService("RunService")
 local folder = workspace.WorkspaceCom["001_TrafficCones"]
 
@@ -50,7 +50,7 @@ for i,v in ipairs(founded) do
 end
 
 rs.PreSimulation:Connect(function()
-	local char = workspace.ReanimateCharacter
+	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -69,9 +69,6 @@ rs.PreSimulation:Connect(function()
 				end
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(0, -2.5, 0)
-				end
-				if v.Name == "Head" then
-					cf = cf * CFrame.new(0, -6, 0)
 				end
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
@@ -84,7 +81,7 @@ rs.PreSimulation:Connect(function()
 end)
 
 rs.RenderStepped:Connect(function()
-	local char = workspace.ReanimateCharacter
+	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -104,10 +101,7 @@ rs.RenderStepped:Connect(function()
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(0, -2.5, 0)
 				end
-				if v.Name == "Head" then
-					cf = cf * CFrame.new(0, -6, 0)
-				end
-
+           
 				v:PivotTo(cf)
 			end)
 		end
@@ -120,4 +114,7 @@ for _,v in pairs(c:GetDescendants()) do
 	end
 end
 
-workspace.ReanimateCharacter.Humanoid.HipHeight=6
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=6
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso").Neck.C0 *= CFrame.new(0,0,-6)
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso")["Left Shoulder"].C0 *= CFrame.new(0,0,-1.5)
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso")["Right Shoulder"].C0 *= CFrame.new(0,0,-1.5)
