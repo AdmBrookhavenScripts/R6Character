@@ -36,7 +36,8 @@ local order = {
 	"Left Arm",
 	"Right Leg",
 	"Left Leg",
-	"Head"
+	"Head",
+	"Face"
 }
 
 local offsets = {
@@ -46,6 +47,7 @@ local offsets = {
     ["Left Arm"] = rot * fix * CFrame.Angles(0, math.rad(180), 0),
     ["Right Leg"] = rot * fix,
     ["Left Leg"] = rot * fix * CFrame.Angles(0, math.rad(180), 0),
+	["Face"] = CFrame.new(0, 2.5, -0.1) * CFrame.Angles(0, math.rad(180), 0)
 }
 
 local founded = {}
@@ -71,7 +73,12 @@ rs.PreSimulation:Connect(function()
 	if not char then return end
 
 	for _,v in ipairs(founded) do
-		local target = char:FindFirstChild(v.Name)
+		local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+else
+	target = char:FindFirstChild(v.Name)
+end
 		if target and target:IsA("BasePart") then
 			
 
@@ -102,7 +109,12 @@ rs.RenderStepped:Connect(function()
 	if not char then return end
 
 	for _,v in ipairs(founded) do
-		local target = char:FindFirstChild(v.Name)
+		local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+else
+	target = char:FindFirstChild(v.Name)
+end
 		if target and target:IsA("BasePart") then
 			
 
@@ -133,4 +145,5 @@ end
 
 workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=1
 t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1,0,0) t["Right Hip"].C0=t["Right Hip"].C0*CFrame.new(-1,0,0)
-t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0) workspace.ReanimateCharacter.Torso.Neck.C0 *= CFrame.new(0,0,-1)
+t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0) 
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso").Neck.C0 *= CFrame.new(0,0,-1)

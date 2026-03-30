@@ -19,7 +19,8 @@ local order = {
 	"Left Arm",
 	"Right Leg",
 	"Left Leg",
-	"Head"
+	"Head",
+	"Face"
 }
 
 local offsets = {
@@ -29,6 +30,7 @@ local offsets = {
 	["Left Arm"] = CFrame.Angles(math.rad(180),0,0),
 	["Right Leg"] = CFrame.Angles(math.rad(180),0,0),
 	["Left Leg"] = CFrame.Angles(math.rad(180),0,0)
+	["Face"] = CFrame.new(0, 2.5, -0.1) * CFrame.Angles(0, math.rad(180), 0)
 }
 
 local founded = {}
@@ -54,7 +56,12 @@ rs.PreSimulation:Connect(function()
 	if not char then return end
 
 	for _,v in ipairs(founded) do
-		local target = char:FindFirstChild(v.Name)
+		local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+else
+	target = char:FindFirstChild(v.Name)
+end
 		if target and target:IsA("BasePart") then
 			
 
@@ -85,7 +92,12 @@ rs.RenderStepped:Connect(function()
 	if not char then return end
 
 	for _,v in ipairs(founded) do
-		local target = char:FindFirstChild(v.Name)
+		local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+else
+	target = char:FindFirstChild(v.Name)
+end
 		if target and target:IsA("BasePart") then
 			
 
