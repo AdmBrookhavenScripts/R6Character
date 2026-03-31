@@ -729,11 +729,6 @@ end
 		RCHumanoid.CameraOffset = TargetCameraOffset:Lerp(RCHumanoid.CameraOffset, math.exp(-9.8 * dt))
 		local isFirstPerson = Reanimate.Camera:IsFirstPerson()
 if Reanimate.Shiftlocked or isFirstPerson then
-	RCHumanoid.AutoRotate = false
-else
-	RCHumanoid.AutoRotate = true
-end
-if Reanimate.Shiftlocked or isFirstPerson then
 	local camLook = workspace.CurrentCamera.CFrame.LookVector
 	local flatLook = Vector3.new(camLook.X, 0, camLook.Z)
 
