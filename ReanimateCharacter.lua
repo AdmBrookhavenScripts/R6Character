@@ -1,20 +1,12 @@
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local Tp = false
-local oldHrp
-oldHrp = player.Character.HumanoidRootPart
-
-workspace.FallenPartsDestroyHeight=0/0
-task.wait(0.5)
-task.spawn(function()
-	while true do
-		if Tp and oldHrp then
-			oldHrp.CFrame = CFrame.new(0, -1e30, 0)
-		end
-		task.wait()
-	end
-end)
-
+game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.House.Visible = false
+game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.House.Active = false
+game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.House.ImageTransparency = 1
+game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.AvatarEditor.Visible = false
+game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.AvatarEditor.Active = false
+game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.AvatarEditor.ImageTransparency = 1
+game.Players.LocalPlayer.PlayerGui.NoResetGUIHandler.TopCornerDetails.Frame.CamOpen.Visible = false
+game.Players.LocalPlayer.PlayerGui.NoResetGUIHandler.TopCornerDetails.Frame.CamOpen.Active = false
+game.Players.LocalPlayer.PlayerGui.NoResetGUIHandler.TopCornerDetails.Frame.CamOpen.ImageTransparency = 1
 -- Warning: This system was made by stevetherealone/uhhhhhh reanimate
 local Players = game.Players
 local Player = Players.LocalPlayer
@@ -778,7 +770,6 @@ end
 function oof()
     local player = game:GetService("Players").LocalPlayer
     local char = player.Character
-    Tp = true
     Reanimate.CreateCharacter()
     GameCamera.CameraSubject = Reanimate.Character:WaitForChild("Humanoid")
     GameCamera.CameraType = Enum.CameraType.Scriptable
@@ -794,6 +785,8 @@ local LeftHip = Torso:WaitForChild("Left Hip")
 local Neck = Torso:WaitForChild("Neck")
 local Humanoid = Figure:WaitForChild("Humanoid")
 local pose = "Standing"
+task.wait()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,1e30,0) task.wait(3) game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored=true
 
 local currentAnim = ""
 local currentAnimInstance = nil
