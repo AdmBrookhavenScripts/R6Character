@@ -6,6 +6,16 @@ task.wait(3)
 task.spawn(function()
 workspace.CurrentCamera.CameraSubject.Parent:PivotTo(workspace.CurrentCamera.CameraSubject.Parent:GetPivot() + Vector3.new(0,100,0))
 workspace.CurrentCamera.CameraSubject.Parent:ScaleTo(6)
+for _,v in pairs(workspace.CurrentCamera.CameraSubject.Parent:GetDescendants()) do
+	if v:IsA("Accessory") then
+		v:Destroy()
+	end
+end
+for _,v in pairs(workspace.CurrentCamera.CameraSubject.Parent:GetDescendants()) do
+	if v:IsA("BasePart") or v:IsA("Decal") then
+		v.Transparency=1
+	end
+end
 end)
 task.wait(1)
 local p = game.Players.LocalPlayer
@@ -119,12 +129,6 @@ end
 		end
 	end
 end)
-
-for _,v in pairs(c:GetDescendants()) do
-	if v:IsA("BasePart") or v:IsA("Decal") then
-		v.Transparency=1
-	end
-end
 
 workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=6
 workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso").Neck.C0 *= CFrame.new(0,0,-6)
