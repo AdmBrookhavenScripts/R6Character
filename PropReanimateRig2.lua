@@ -61,7 +61,7 @@ local offsets = {
     ["Left Arm"] = rot * fix * CFrame.Angles(0, math.rad(180), 0),
     ["Right Leg"] = rot * fix,
     ["Left Leg"] = rot * fix * CFrame.Angles(0, math.rad(180), 0),
-	["Face"] = CFrame.new(0, 2.5, -0.01) * CFrame.Angles(0, math.rad(180), 0)
+	["Face"] = CFrame.new(0, 0.2, -0.01) * CFrame.Angles(0, math.rad(180), 0)
 }
 
 local founded = {}
@@ -112,6 +112,9 @@ end
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(1, -2.5, 0)
 				end
+				if v.Name == "Head" then
+				cf = cf * CFrame.new(0, -2.2, 0)
+				end
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
 				if remote and v.Name ~= "Head" and v.Name ~= "Torso" then
@@ -152,6 +155,9 @@ end
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(1, -2.5, 0)
 				end
+				if v.Name == "Head" then
+				cf = cf * CFrame.new(0, -2.2, 0)
+				end
 	
 				v:PivotTo(cf)
 			end)
@@ -164,4 +170,4 @@ t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1.5,0,0) t["Right Hip"].C0=t["Right
 t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0) 
 workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 = workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 * CFrame.new(0,1,0) 
 workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 = workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 * CFrame.new(0,1,0)
-workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso").Neck.C0 *= CFrame.new(0,0,-1)
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso").Neck.C0 *= CFrame.new(0,0,1.2)
