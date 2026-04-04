@@ -107,13 +107,16 @@ end
 					cf = cf * CFrame.new(0, -3, 0)
 				end
 				if v.Name == "Right Arm" then
-					cf = cf * CFrame.new(-1, -2.5, 0)
+					cf = cf * CFrame.new(-2.5, -2.5, 0.7)
 				end
 				if v.Name == "Left Arm" then
-					cf = cf * CFrame.new(1, -2.5, 0)
+					cf = cf * CFrame.new(1.5, -2.5, 0.7)
 				end
 				if v.Name == "Head" then
 				cf = cf * CFrame.new(0, -2.2, 0)
+				end
+				if v.Name == "Right Leg" then
+					cf = cf * CFrame.new(-0.9, 0, 0)
 				end
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
@@ -150,13 +153,16 @@ end
 					cf = cf * CFrame.new(0, -3, 0)
 				end
 				if v.Name == "Right Arm" then
-					cf = cf * CFrame.new(-1, -2.5, 0)
+					cf = cf * CFrame.new(-2.2, -2.5, 0.7)
 				end
 				if v.Name == "Left Arm" then
-					cf = cf * CFrame.new(1, -2.5, 0)
+					cf = cf * CFrame.new(1.5, -2.5, 0.7)
 				end
 				if v.Name == "Head" then
 				cf = cf * CFrame.new(0, -2.2, 0)
+				end
+				if v.Name == "Right Leg" then
+					cf = cf * CFrame.new(-0.9, 0, 0)
 				end
 	
 				v:PivotTo(cf)
@@ -165,8 +171,8 @@ end
 	end
 end)
 
-workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=1
-t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1.5,0,0) t["Right Hip"].C0=t["Right Hip"].C0*CFrame.new(-1.5,0,0)
+workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=2
+t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1,0,0) t["Right Hip"].C0=t["Right Hip"].C0*CFrame.new(-1,0,0)
 t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0) 
 workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 = workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 * CFrame.new(0,1,0) 
 workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 = workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 * CFrame.new(0,1,0)
