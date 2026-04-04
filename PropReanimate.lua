@@ -61,6 +61,65 @@ for i,v in ipairs(founded) do
 	end
 end
 
+local VF = Instance.new("Folder")
+VF.Name = "VisualClones"
+VF.Parent = workspace
+
+local clones = {}
+
+for _,v in ipairs(founded) do
+	local clone = v:Clone()
+	clone.Name = v.Name
+	clone.Parent = VF
+
+	local remote = clone:FindFirstChild("SetCurrentCFrame")
+	if remote then
+		remote:Destroy()
+	end
+
+	table.insert(clones, clone)
+	
+	for _,d in ipairs(v:GetDescendants()) do
+		if d:IsA("BasePart") or d:IsA("Decal") then
+			d.Transparency = 1
+		end
+	end
+end
+
+rs.PostSimulation:Connect(function()
+	local char = workspace.CurrentCamera.CameraSubject.Parent
+	if not char then return end
+
+	for i,v in ipairs(clones) do
+	local original = founded[i]
+	local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+else
+	target = char:FindFirstChild(v.Name)
+end
+		if target and target:IsA("BasePart") then
+			
+
+			task.delay(0, function()
+				local cf = target.CFrame * offsets[v.Name]
+
+				if v.Name == "Torso" then
+					cf = cf * CFrame.new(0, -13, 0)
+				end
+				if v.Name == "Right Arm" then
+					cf = cf * CFrame.new(0, -2.5, 0)
+				end
+				if v.Name == "Left Arm" then
+					cf = cf * CFrame.new(0, -2.5, 0)
+				end
+           
+				v:PivotTo(cf)
+			end)
+		end
+	end
+end)
+
 rs.PreSimulation:Connect(function()
 	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
@@ -87,44 +146,13 @@ end
 				if v.Name == "Left Arm" then
 					cf = cf * CFrame.new(0, -2.5, 0)
 				end
+				
+				v:PivotTo(cf)
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
 				if remote then
 					remote:InvokeServer(cf)
 				end
-			end)
-		end
-	end
-end)
-
-rs.Heartbeat:Connect(function()
-	local char = workspace.CurrentCamera.CameraSubject.Parent
-	if not char then return end
-
-	for _,v in ipairs(founded) do
-		local target
-if v.Name == "Face" then
-	target = char:FindFirstChild("Head")
-else
-	target = char:FindFirstChild(v.Name)
-end
-		if target and target:IsA("BasePart") then
-			
-
-			task.delay(0, function()
-				local cf = target.CFrame * offsets[v.Name]
-
-				if v.Name == "Torso" then
-					cf = cf * CFrame.new(0, -13, 0)
-				end
-				if v.Name == "Right Arm" then
-					cf = cf * CFrame.new(0, -2.5, 0)
-				end
-				if v.Name == "Left Arm" then
-					cf = cf * CFrame.new(0, -2.5, 0)
-				end
-           
-				v:PivotTo(cf)
 			end)
 		end
 	end
