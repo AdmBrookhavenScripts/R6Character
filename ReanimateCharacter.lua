@@ -319,6 +319,12 @@ do
 		UserInputService.TextBoxFocusReleased:Connect(resetInputDevices)
 		GuiService.MenuOpened:Connect(resetInputDevices)
 		RunService:BindToRenderStep("Uhhhhhh_Control", Enum.RenderPriority.Input.Value + 1, function(dt)
+		if UserInputService:GetFocusedTextBox() then
+	self.Inputs:Reset()
+	self.Move = Vector3.zero
+	self.Jump = false
+	return
+end
 			local screensize = Util.GetScreenSize()
 			self.Move = Vector3.zero
 			if self.Inputs.KB.Up then
