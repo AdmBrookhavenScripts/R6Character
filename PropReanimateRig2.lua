@@ -82,18 +82,43 @@ for i,v in ipairs(founded) do
 	end
 end
 
+local VF = Instance.new("Folder")
+VF.Name = "VisualClones"
+VF.Parent = workspace
+
+local clones = {}
+
+for _,v in ipairs(founded) do
+	local clone = v:Clone()
+	clone.Name = v.Name
+	clone.Parent = VF
+
+	local remote = clone:FindFirstChild("SetCurrentCFrame")
+	if remote then
+		remote:Destroy()
+	end
+
+	table.insert(clones, clone)
+	
+	for _,d in ipairs(v:GetDescendants()) do
+		if d:IsA("BasePart") or d:IsA("Decal") then
+			d.Transparency = 1
+		end
+	end
+end
+
 rs.PostSimulation:Connect(function()
 	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
 
-	for _,v in ipairs(founded) do
-		local target
+	for i,v in ipairs(clones) do
+	local original = founded[i]
+	local target
 if v.Name == "Face" then
 	target = char:FindFirstChild("Head")
 
 elseif v.Name == "FrontTorso" or v.Name == "BackTorso" then
 	target = char:FindFirstChild("Torso")
-
 else
 	target = char:FindFirstChild(v.Name)
 end
@@ -133,7 +158,6 @@ if v.Name == "Face" then
 
 elseif v.Name == "FrontTorso" or v.Name == "BackTorso" then
 	target = char:FindFirstChild("Torso")
-
 else
 	target = char:FindFirstChild(v.Name)
 end
@@ -155,6 +179,8 @@ end
 				if v.Name == "Head" then
 				cf = cf * CFrame.new(0, -2.2, 0)
 				end
+				
+				v:PivotTo(cf)
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
 				if remote then
