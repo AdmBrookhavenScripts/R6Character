@@ -82,48 +82,30 @@ for i,v in ipairs(founded) do
 	end
 end
 
-rs.PostSimulation:Connect(function()
-	local char = workspace.CurrentCamera.CameraSubject.Parent
-	if not char then return end
+local VF = Instance.new("Folder")
+VF.Name = "VisualClones"
+VF.Parent = workspace
 
-	for _,v in ipairs(founded) do
-		local target
-if v.Name == "Face" then
-	target = char:FindFirstChild("Head")
+local clones = {}
 
-elseif v.Name == "FrontTorso" or v.Name == "BackTorso" then
-	target = char:FindFirstChild("Torso")
+for _,v in ipairs(founded) do
+	local clone = v:Clone()
+	clone.Name = v.Name
+	clone.Parent = VF
 
-else
-	target = char:FindFirstChild(v.Name)
-end
-		if target and target:IsA("BasePart") then
-			
+	local remote = clone:FindFirstChild("SetCurrentCFrame")
+	if remote then
+		remote:Destroy()
+	end
 
-			task.delay(0, function()
-				local cf = target.CFrame * offsets[v.Name]
-
-				if v.Name == "Torso" then
-					cf = cf * CFrame.new(0, -3, 0)
-				end
-				if v.Name == "Right Arm" then
-					cf = cf * CFrame.new(-2.2, -2.5, 0.7)
-				end
-				if v.Name == "Left Arm" then
-					cf = cf * CFrame.new(1.5, -2.5, 0.7)
-				end
-				if v.Name == "Head" then
-				cf = cf * CFrame.new(0, -2.2, 0)
-				end
-				if v.Name == "Right Leg" then
-					cf = cf * CFrame.new(-0.9, 0, 0)
-				end
+	table.insert(clones, clone)
 	
-				v:PivotTo(cf)
-			end)
+	for _,d in ipairs(v:GetDescendants()) do
+		if d:IsA("BasePart") or d:IsA("Decal") then
+			d.Transparency = 1
 		end
 	end
-end)
+end
 
 rs.PreSimulation:Connect(function()
 	local char = workspace.CurrentCamera.CameraSubject.Parent
@@ -161,11 +143,57 @@ end
 				if v.Name == "Right Leg" then
 					cf = cf * CFrame.new(-0.9, 0, 0)
 				end
+				
+				v:PivotTo(cf)
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
 				if remote then
 					remote:InvokeServer(cf)
 				end
+			end)
+		end
+	end
+end)
+
+rs.PostSimulation:Connect(function()
+	local char = workspace.CurrentCamera.CameraSubject.Parent
+	if not char then return end
+
+for i,v in ipairs(clones) do
+	local original = founded[i]
+	local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+
+elseif v.Name == "FrontTorso" or v.Name == "BackTorso" then
+	target = char:FindFirstChild("Torso")
+
+else
+	target = char:FindFirstChild(v.Name)
+end
+		if target and target:IsA("BasePart") then
+			
+
+			task.delay(0, function()
+				local cf = target.CFrame * offsets[v.Name]
+
+				if v.Name == "Torso" then
+					cf = cf * CFrame.new(0, -3, 0)
+				end
+				if v.Name == "Right Arm" then
+					cf = cf * CFrame.new(-2.2, -2.5, 0.7)
+				end
+				if v.Name == "Left Arm" then
+					cf = cf * CFrame.new(1.5, -2.5, 0.7)
+				end
+				if v.Name == "Head" then
+				cf = cf * CFrame.new(0, -2.2, 0)
+				end
+				if v.Name == "Right Leg" then
+					cf = cf * CFrame.new(-0.9, 0, 0)
+				end
+	
+				v:PivotTo(cf)
 			end)
 		end
 	end
