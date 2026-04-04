@@ -82,6 +82,49 @@ for i,v in ipairs(founded) do
 	end
 end
 
+rs.PostSimulation:Connect(function()
+	local char = workspace.CurrentCamera.CameraSubject.Parent
+	if not char then return end
+
+	for _,v in ipairs(founded) do
+		local target
+if v.Name == "Face" then
+	target = char:FindFirstChild("Head")
+
+elseif v.Name == "FrontTorso" or v.Name == "BackTorso" then
+	target = char:FindFirstChild("Torso")
+
+else
+	target = char:FindFirstChild(v.Name)
+end
+		if target and target:IsA("BasePart") then
+			
+
+			task.delay(0, function()
+				local cf = target.CFrame * offsets[v.Name]
+
+				if v.Name == "Torso" then
+					cf = cf * CFrame.new(0, -3, 0)
+				end
+				if v.Name == "Right Arm" then
+					cf = cf * CFrame.new(-2.2, -2.5, 0.7)
+				end
+				if v.Name == "Left Arm" then
+					cf = cf * CFrame.new(1.5, -2.5, 0.7)
+				end
+				if v.Name == "Head" then
+				cf = cf * CFrame.new(0, -2.2, 0)
+				end
+				if v.Name == "Right Leg" then
+					cf = cf * CFrame.new(-0.9, 0, 0)
+				end
+	
+				v:PivotTo(cf)
+			end)
+		end
+	end
+end)
+
 rs.PreSimulation:Connect(function()
 	local char = workspace.CurrentCamera.CameraSubject.Parent
 	if not char then return end
@@ -120,52 +163,9 @@ end
 				end
 
 				local remote = v:FindFirstChild("SetCurrentCFrame")
-				if remote and v.Name ~= "Head" and v.Name ~= "Torso" and v.Name ~= "BackTorso" and v.Name ~= "FrontTorso" then
+				if remote then
 					remote:InvokeServer(cf)
 				end
-			end)
-		end
-	end
-end)
-
-rs.Heartbeat:Connect(function()
-	local char = workspace.CurrentCamera.CameraSubject.Parent
-	if not char then return end
-
-	for _,v in ipairs(founded) do
-		local target
-if v.Name == "Face" then
-	target = char:FindFirstChild("Head")
-
-elseif v.Name == "FrontTorso" or v.Name == "BackTorso" then
-	target = char:FindFirstChild("Torso")
-
-else
-	target = char:FindFirstChild(v.Name)
-end
-		if target and target:IsA("BasePart") then
-			
-
-			task.delay(0, function()
-				local cf = target.CFrame * offsets[v.Name]
-
-				if v.Name == "Torso" then
-					cf = cf * CFrame.new(0, -3, 0)
-				end
-				if v.Name == "Right Arm" then
-					cf = cf * CFrame.new(-2.2, -2.5, 0.7)
-				end
-				if v.Name == "Left Arm" then
-					cf = cf * CFrame.new(1.5, -2.5, 0.7)
-				end
-				if v.Name == "Head" then
-				cf = cf * CFrame.new(0, -2.2, 0)
-				end
-				if v.Name == "Right Leg" then
-					cf = cf * CFrame.new(-0.9, 0, 0)
-				end
-	
-				v:PivotTo(cf)
 			end)
 		end
 	end
