@@ -782,13 +782,6 @@ function oof()
     Reanimate.Camera.Zoom = 16
     Reanimate.Camera._Zoom = 16
 local Figure = Reanimate.Character
-repeat task.wait() until Figure
-    and Figure:FindFirstChild("Torso")
-    and Figure.Torso:FindFirstChild("Right Shoulder")
-    and Figure.Torso:FindFirstChild("Left Shoulder")
-    and Figure.Torso:FindFirstChild("Right Hip")
-    and Figure.Torso:FindFirstChild("Left Hip")
-    and Figure.Torso:FindFirstChild("Neck")
 local Torso = Figure:WaitForChild("Torso")
 local RightShoulder = Torso:WaitForChild("Right Shoulder")
 local LeftShoulder = Torso:WaitForChild("Left Shoulder")
