@@ -781,7 +781,6 @@ function oof()
     GameCamera.CameraType = Enum.CameraType.Scriptable
     Reanimate.Camera.Zoom = 16
     Reanimate.Camera._Zoom = 16
-    task.wait(2)
 local Figure = Reanimate.Character
 repeat task.wait() until Figure
     and Figure:FindFirstChild("Torso")
