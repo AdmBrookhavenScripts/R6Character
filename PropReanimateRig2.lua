@@ -2,25 +2,24 @@
 task.spawn(function()
 loadstring(game:HttpGet("https://github.com/AdmBrookhavenScripts/R6Character/raw/refs/heads/main/ReanimateCharacter.lua"))()
 end)
-task.wait(3)
+repeat task.wait() until workspace:FindFirstChild("ReanimateCharacter")
 task.spawn(function()
-workspace.CurrentCamera.CameraSubject.Parent:PivotTo(workspace.CurrentCamera.CameraSubject.Parent:GetPivot() + Vector3.new(0,100,0))
-workspace.CurrentCamera.CameraSubject.Parent:ScaleTo(4)
-for _,v in pairs(workspace.CurrentCamera.CameraSubject.Parent:GetDescendants()) do
+workspace.ReanimateCharacter:PivotTo(workspace.ReanimateCharacter:GetPivot() + Vector3.new(0,100,0))
+workspace.ReanimateCharacter:ScaleTo(4)
+for _,v in pairs(workspace.ReanimateCharacter:GetDescendants()) do
 	if v:IsA("Accessory") then
 		v:Destroy()
 	end
 end
-for _,v in pairs(workspace.CurrentCamera.CameraSubject.Parent:GetDescendants()) do
+for _,v in pairs(workspace.ReanimateCharacter:GetDescendants()) do
 	if v:IsA("BasePart") or v:IsA("Decal") then
 		v.Transparency=1
 	end
 end
 end)
-task.wait(1)
 local p = game.Players.LocalPlayer
-local c = workspace.CurrentCamera.CameraSubject.Parent
-local t = workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso")
+local c = workspace.ReanimateCharacter
+local t = workspace.ReanimateCharacter.Torso
 local rs = game:GetService("RunService")
 local folder = workspace.WorkspaceCom["001_TrafficCones"]
 
@@ -108,7 +107,7 @@ for _,v in ipairs(founded) do
 end
 
 rs.PostSimulation:Connect(function()
-	local char = workspace.CurrentCamera.CameraSubject.Parent
+	local char = workspace.ReanimateCharacter
 	if not char then return end
 
 	for i,v in ipairs(clones) do
@@ -148,7 +147,7 @@ end
 end)
 
 rs.PreSimulation:Connect(function()
-	local char = workspace.CurrentCamera.CameraSubject.Parent
+	local char = workspace.ReanimateCharacter
 	if not char then return end
 
 	for _,v in ipairs(founded) do
@@ -191,9 +190,11 @@ end
 	end
 end)
 
-workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Humanoid").HipHeight=1
+workspace.ReanimateCharacter.Humanoid.HipHeight=1
 t["Left Hip"].C0=t["Left Hip"].C0*CFrame.new(1.5,0,0) t["Right Hip"].C0=t["Right Hip"].C0*CFrame.new(-1.5,0,0)
 t["Left Shoulder"].C0=t["Left Shoulder"].C0*CFrame.new(-1.5,0,0) t["Right Shoulder"].C0=t["Right Shoulder"].C0*CFrame.new(1.5,0,0) 
-workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 = workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 * CFrame.new(0,1,0) 
-workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 = workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 * CFrame.new(0,1,0)
-workspace.CurrentCamera.CameraSubject.Parent:FindFirstChild("Torso").Neck.C0 *= CFrame.new(0,0,1.2)
+workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 =
+workspace.ReanimateCharacter.Torso["Left Shoulder"].C0 * CFrame.new(0,1,0)
+workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 =
+workspace.ReanimateCharacter.Torso["Right Shoulder"].C0 * CFrame.new(0,1,0)
+workspace.ReanimateCharacter.Torso.Neck.C0 *= CFrame.new(0,0,1.2)
