@@ -78,11 +78,6 @@ RunService.Heartbeat:Connect(function()
         if Target then
                 local CF = Target.CFrame * Info[2] * DownAngle
                 Clone:PivotTo(CF)
-                for i, v in pairs(Clone:GetDescendants()) do
-                if v:IsA("BasePart") and v.CanCollide==true then
-                v.CanCollide=false
-                end
-            end
         end
     end
 end)
@@ -98,11 +93,18 @@ RunService.Heartbeat:Connect(function()
                     Remote:InvokeServer(CF)
                 end
             end)
-            for i, v in pairs(Prop:GetDescendants()) do
-                if v:IsA("BasePart") and v.CanCollide==true then
-                v.CanCollide=false
-                end
-            end
         end
     end
 end)
+
+for i, v in pairs(Clone:GetDescendants()) do
+if v:IsA("BasePart") and v.CanCollide==true then
+v.CanCollide=false
+end
+end
+
+for i, v in pairs(Prop:GetDescendants()) do
+if v:IsA("BasePart") and v.CanCollide==true then
+v.CanCollide=false
+end
+end
