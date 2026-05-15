@@ -1,12 +1,3 @@
-game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.House.Visible = false
-game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.House.Active = false
-game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.House.ImageTransparency = 1
-game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.AvatarEditor.Visible = false
-game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.AvatarEditor.Active = false
-game.Players.LocalPlayer.PlayerGui.MainGUIHandler.MainButtons.Buttons.AvatarEditor.ImageTransparency = 1
-game.Players.LocalPlayer.PlayerGui.NoResetGUIHandler.TopCornerDetails.Frame.CamOpen.Visible = false
-game.Players.LocalPlayer.PlayerGui.NoResetGUIHandler.TopCornerDetails.Frame.CamOpen.Active = false
-game.Players.LocalPlayer.PlayerGui.NoResetGUIHandler.TopCornerDetails.Frame.CamOpen.ImageTransparency = 1
 -- Warning: This system was made by stevetherealone/uhhhhhh reanimate
 local Players = game.Players
 local Player = Players.LocalPlayer
