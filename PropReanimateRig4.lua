@@ -97,14 +97,18 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
-for i, v in pairs(Clone:GetDescendants()) do
-if v:IsA("BasePart") and v.CanCollide==true then
-v.CanCollide=false
-end
+for _, Clone in ipairs(Clones) do
+    for _, v in ipairs(Clone:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CanCollide = false
+        end
+    end
 end
 
-for i, v in pairs(Prop:GetDescendants()) do
-if v:IsA("BasePart") and v.CanCollide==true then
-v.CanCollide=false
-end
+for _, Prop in ipairs(Founded) do
+    for _, v in ipairs(Prop:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CanCollide = false
+        end
+    end
 end
