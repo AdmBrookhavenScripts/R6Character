@@ -22,7 +22,8 @@ local Offsets = {
     [11] = {"Right Leg", CFrame.new(0, 1.25, 0)},
     [12] = {"Right Leg", CFrame.new(0,-1.25, 0)},
 
-    [13] = {"Head", CFrame.new()}
+    [13] = {"Head", CFrame.new()},
+    [14] = {"Head", CFrame.new(0, 0, -1.2) * CFrame.Angles(0, math.rad(180), 0)}
 }
 
 task.spawn(function()
@@ -70,27 +71,37 @@ for _,v in ipairs(Founded) do
 end
 
 RunService.Heartbeat:Connect(function()
-    local Char = workspace.CurrentCamera.CameraSubject.Parent
+    local Char = workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
     if not Char then return end
-    for i,Clone in ipairs(Clones) do
+
+    local MaxParts = #Clones >= 14 and 14 or 13
+
+    for i = 1, MaxParts do
+        local Clone = Clones[i]
         local Info = Offsets[i]
-        local Target = Char:FindFirstChild(Info[1])
-        if Target then
-                local CF = Target.CFrame * Info[2] * DownAngle
-                Clone:PivotTo(CF)
+        if Clone and Info then
+            local Target = Char:FindFirstChild(Info[1])
+            if Target then
+                if i == 14 then
+                    Clone:PivotTo(Target.CFrame * Info[2])
+                else
+                    Clone:PivotTo(Target.CFrame * Info[2] * DownAngle)
+                end
+            end
         end
     end
 end)
 
 RunService.Heartbeat:Connect(function()
-    for i,Prop in ipairs(Founded) do
+    for i = 1, (#Clones >= 14 and 14 or 13) do
+        local Prop = Founded[i]
         local Clone = Clones[i]
-        if Clone then
+
+        if Prop and Clone then
             task.delay(0,function()
-                local CF = Clone:GetPivot()
                 local Remote = Prop:FindFirstChild("SetCurrentCFrame")
                 if Remote then
-                    Remote:InvokeServer(CF)
+                    Remote:InvokeServer(Clone:GetPivot())
                 end
             end)
         end
@@ -109,6 +120,12 @@ for _, Prop in ipairs(Founded) do
     for _, v in ipairs(Prop:GetDescendants()) do
         if v:IsA("BasePart") then
             v.CanCollide = false
+        end
+        if v:IsA("SurfaceGui") then
+        v:Destroy()
+        end
+        if v:IsA("BillboardGui") then
+        v:Destroy()
         end
     end
 end
