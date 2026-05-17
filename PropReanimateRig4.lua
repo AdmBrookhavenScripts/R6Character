@@ -70,40 +70,48 @@ for _,v in ipairs(Founded) do
     end
 end
 
-RunService.Heartbeat:Connect(function()
-    local Char = workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
-    if not Char then return end
+task.spawn(function()
+    while true do
+        RunService.Heartbeat:Wait()
 
-    local MaxParts = #Clones >= 14 and 14 or 13
+        local Char = workspace:FindFirstChild("ReanimateCharacter")
+        if not Char then continue end
 
-    for i = 1, MaxParts do
-        local Clone = Clones[i]
-        local Info = Offsets[i]
-        if Clone and Info then
-            local Target = Char:FindFirstChild(Info[1])
-            if Target then
-                if i == 14 then
-                    Clone:PivotTo(Target.CFrame * Info[2])
-                else
-                    Clone:PivotTo(Target.CFrame * Info[2] * DownAngle)
+        local MaxParts = #Clones >= 14 and 14 or 13
+
+        for i = 1, MaxParts do
+            local Clone = Clones[i]
+            local Info = Offsets[i]
+            if Clone and Info then
+                local Target = Char:FindFirstChild(Info[1])
+                if Target then
+                    if i == 14 then
+                        Clone:PivotTo(Target.CFrame * Info[2])
+                    else
+                        Clone:PivotTo(Target.CFrame * Info[2] * DownAngle)
+                    end
                 end
             end
         end
     end
 end)
 
-RunService.Heartbeat:Connect(function()
-    for i = 1, (#Clones >= 14 and 14 or 13) do
-        local Prop = Founded[i]
-        local Clone = Clones[i]
+task.spawn(function()
+    while true do
+        RunService.Heartbeat:Wait()
 
-        if Prop and Clone then
-            task.delay(0,function()
-                local Remote = Prop:FindFirstChild("SetCurrentCFrame")
-                if Remote then
-                    Remote:InvokeServer(Clone:GetPivot())
-                end
-            end)
+        for i = 1, (#Clones >= 14 and 14 or 13) do
+            local Prop = Founded[i]
+            local Clone = Clones[i]
+
+            if Prop and Clone then
+                task.delay(0,function()
+                    local Remote = Prop:FindFirstChild("SetCurrentCFrame")
+                    if Remote then
+                        Remote:InvokeServer(Clone:GetPivot())
+                    end
+                end)
+            end
         end
     end
 end)
@@ -122,10 +130,10 @@ for _, Prop in ipairs(Founded) do
             v.CanCollide = false
         end
         if v:IsA("SurfaceGui") then
-        v:Destroy()
+            v:Destroy()
         end
         if v:IsA("BillboardGui") then
-        v:Destroy()
+            v:Destroy()
         end
     end
 end
