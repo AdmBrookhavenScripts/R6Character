@@ -1,6 +1,7 @@
 repeat task.wait() until workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
+local Players = cloneref(game:GetService("Players"))
+local RunService = cloneref(game:GetService("RunService"))
+local StarterGui = cloneref(game:GetService("StarterGui"))
 
 local Founded = {}
 local Size = 2.5
@@ -131,3 +132,5 @@ for _, Prop in ipairs(Founded) do
         end
     end
 end
+
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
