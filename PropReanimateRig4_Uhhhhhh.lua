@@ -43,10 +43,6 @@ for _,v in ipairs(Folder:GetChildren()) do
     end
 end
 
-table.sort(Founded,function(a,b)
-    return a:GetDebugId() < b:GetDebugId()
-end)
-
 local VF = Instance.new("Folder", workspace)
 VF.Name = "ClientSideClones"
 local Clones = {}
