@@ -1,7 +1,9 @@
-repeat task.wait() until workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
 local Players = cloneref(game:GetService("Players"))
 local RunService = cloneref(game:GetService("RunService"))
 local StarterGui = cloneref(game:GetService("StarterGui"))
+
+if not workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA") then StarterGui:SetCore("SendNotification", { Title = "Prop Reanimate", Text = "Waiting for Uhhhhhh Reanimate Character...", Duration = 5 }) end
+repeat task.wait() until workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
 
 local Founded = {}
 local Size = 2.5
@@ -37,23 +39,32 @@ for _,v in ipairs(Character:GetDescendants()) do
     end
 end
 
+local VF = Instance.new("Folder", workspace)
+VF.Name = "ClientSideClones"
+
 for _,v in ipairs(Folder:GetChildren()) do
     if v:IsA("Model") and string.find(v.Name, Player.Name) then
         table.insert(Founded, v)
     end
 end
 
-local VF = Instance.new("Folder", workspace)
-VF.Name = "ClientSideClones"
+table.sort(Founded, function(a, b)
+    return a:GetDebugId() < b:GetDebugId()
+end)
+
 local Clones = {}
+
 for _,v in ipairs(Founded) do
     local Clone = v:Clone()
     Clone.Parent = VF
+
     local Remote = Clone:FindFirstChild("SetCurrentCFrame")
     if Remote then
         Remote:Destroy()
     end
+
     table.insert(Clones, Clone)
+
     for _,d in ipairs(v:GetDescendants()) do
         if d:IsA("BasePart") or d:IsA("Decal") then
             d.Transparency = 1
@@ -61,51 +72,45 @@ for _,v in ipairs(Founded) do
     end
 end
 
-task.spawn(function()
-    while true do
-        RunService.Heartbeat:Wait()
+RunService.Heartbeat:Connect(function()
+    local Char = workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
+    if not Char then return end
 
-        local Char = workspace:FindFirstChild("(C) Uhhhhhh V1.0.9 BETA")
-        if not Char then continue end
+    local MaxParts = #Clones >= 14 and 14 or 13
 
-        local MaxParts = #Clones >= 14 and 14 or 13
-
-        for i = 1, MaxParts do
-            local Clone = Clones[i]
-            local Info = Offsets[i]
-            if Clone and Info then
-                local Target = Char:FindFirstChild(Info[1])
-                if Target then
-                    if i == 14 then
-                        Clone:PivotTo(Target.CFrame * Info[2])
-                    else
-                        Clone:PivotTo(Target.CFrame * Info[2] * DownAngle)
-                    end
+    for i = 1, MaxParts do
+        local Clone = Clones[i]
+        local Info = Offsets[i]
+        if Clone and Info then
+            local Target = Char:FindFirstChild(Info[1])
+            if Target then
+                if i == 14 then
+                    Clone:PivotTo(Target.CFrame * Info[2])
+                else
+                    Clone:PivotTo(Target.CFrame * Info[2] * DownAngle)
                 end
             end
         end
     end
 end)
 
-task.spawn(function()
-    while true do
-        RunService.Heartbeat:Wait()
+RunService.Heartbeat:Connect(function()
+    for i = 1, (#Clones >= 14 and 14 or 13) do
+        local Prop = Founded[i]
+        local Clone = Clones[i]
 
-        for i = 1, (#Clones >= 14 and 14 or 13) do
-            local Prop = Founded[i]
-            local Clone = Clones[i]
-
-            if Prop and Clone then
-                task.delay(0,function()
-                    local Remote = Prop:FindFirstChild("SetCurrentCFrame")
-                    if Remote then
-                        Remote:InvokeServer(Clone:GetPivot())
-                    end
-                end)
-            end
+        if Prop and Clone then
+            task.delay(0,function()
+                local Remote = Prop:FindFirstChild("SetCurrentCFrame")
+                if Remote then
+                    Remote:InvokeServer(Clone:GetPivot())
+                end
+            end)
         end
     end
 end)
+
+local FaceProp = Founded[14]
 
 for _, Clone in ipairs(Clones) do
     for _, v in ipairs(Clone:GetDescendants()) do
@@ -120,13 +125,15 @@ for _, Prop in ipairs(Founded) do
         if v:IsA("BasePart") then
             v.CanCollide = false
         end
-        if v:IsA("SurfaceGui") then
-            v:Destroy()
-        end
-        if v:IsA("BillboardGui") then
-            v:Destroy()
-        end
     end
+end
+
+if FaceProp then
+	for _, v in ipairs(FaceProp:GetDescendants()) do
+		if v:IsA("Frame") or v:IsA("ImageLabel") then
+			v.Visible = false
+		end
+	end
 end
 
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
